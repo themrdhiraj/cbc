@@ -26,25 +26,25 @@ print_r(isset($_SESSION['message']) ? $_SESSION['message'] : '');
 						<thead class="thead-dark">
 							<tr>
 								<th>#</th>
-								<th <?php if ($getCount['count'] == 1) {
+								<th <?php if ($getCount['count'] == 1 || $getCount['count'] == 9) {
 										echo "class='bg-success'";
 									} ?>>
-									DAD
+									Player 1
 								</th>
 								<th <?php if ($getCount['count'] == 3) {
 										echo "class='bg-success'";
 									} ?>>
-									DHIRAJ
+									Player 2
 								</th>
 								<th <?php if ($getCount['count'] == 5) {
 										echo "class='bg-success'";
 									} ?>>
-									UNCLE
+									Player 3
 								</th>
 								<th <?php if ($getCount['count'] == 7) {
 										echo "class='bg-success'";
 									} ?>>
-									SUMAN
+									Player 4
 								</th>
 							</tr>
 						</thead>
@@ -80,6 +80,26 @@ print_r(isset($_SESSION['message']) ? $_SESSION['message'] : '');
 							<?php
 							}
 							}
+							if ($getCount['count'] >= 9) {
+								?>
+							<tr class='bg-success'>
+								<th>Tot</th>
+								<th>
+									<?php print_r(array_sum(array_column($data, 'player1'))); ?>.<?php print_r(array_sum(array_column($data, 'p1ot'))); ?>
+										
+									</th>
+								<th>
+									<?php print_r(array_sum(array_column($data, 'player2'))); ?>.<?php print_r(array_sum(array_column($data, 'p2ot'))); ?>
+								</th>
+								<th>
+									<?php print_r(array_sum(array_column($data, 'player3'))); ?>.<?php print_r(array_sum(array_column($data, 'p3ot'))); ?>
+								</th>
+								<th>
+									<?php print_r(array_sum(array_column($data, 'player4'))); ?>.<?php print_r(array_sum(array_column($data, 'p4ot'))); ?>
+								</th>
+							</tr>
+							<?php
+							}
 							?>
 							<form action="calculate.php" method="POST">
 								<tr>
@@ -113,7 +133,9 @@ print_r(isset($_SESSION['message']) ? $_SESSION['message'] : '');
 									<th colspan="5">
 										<div class="btn-group btn-block">
 											<input type="hidden" name="count" value="<?php echo $getCount['count']; ?>">
-											<button name="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+											<?php if ($getCount['count'] != 11) {
+												echo '<button name="submit" class="btn btn-primary btn-lg btn-block">Submit</button>';
+										} ?>
 											<a href="controller/truncate.php" class="btn btn-info">Reset</a>
 										</div>
 									</th>
