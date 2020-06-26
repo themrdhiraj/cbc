@@ -6,6 +6,7 @@
 * @Last Modified time: 2020-06-25 18:47:07
 */
 require 'controller/fetchData.php';
+$start_time = microtime(TRUE);
 session_start();
 print_r(isset($_SESSION['message']) ? $_SESSION['message'] : '');
 ?>
@@ -22,29 +23,29 @@ print_r(isset($_SESSION['message']) ? $_SESSION['message'] : '');
 			<h6 class="text-center text-white">Call Break Counter</h6>
 			<div class="row justify-content-md-center">
 				<div class="table-responsive">
-					<table class="table table-bordered table-striped text-white" id="table">
+					<table class="table table-bordered table-striped table-dark text-white">
 						<thead class="thead-dark">
 							<tr>
 								<th>#</th>
-								<th <?php if ($getCount['count'] == 1 || $getCount['count'] == 9) {
-										echo "class='bg-success'";
-									} ?>>
-									Player 1
+								<th class="<?php if ($getCount['count'] == 1 || $getCount['count'] == 9) {
+									echo 'bg-success';
+									} ?> text-center">
+									<h4>Player 1</h4>
 								</th>
-								<th <?php if ($getCount['count'] == 3) {
-										echo "class='bg-success'";
-									} ?>>
-									Player 2
+								<th  class="<?php if ($getCount['count'] == 3) {
+									echo 'bg-success';
+									} ?> text-center">
+									<h4>Player 2</h4>
 								</th>
-								<th <?php if ($getCount['count'] == 5) {
-										echo "class='bg-success'";
-									} ?>>
-									Player 3
+								<th  class="<?php if ($getCount['count'] == 5) {
+									echo 'bg-success';
+									} ?> text-center">
+									<h4>Player 3</h4>
 								</th>
-								<th <?php if ($getCount['count'] == 7) {
-										echo "class='bg-success'";
-									} ?>>
-									Player 4
+								<th  class="<?php if ($getCount['count'] == 7) {
+									echo 'bg-success';
+									} ?> text-center">
+									<h4>Player 4</h4>
 								</th>
 							</tr>
 						</thead>
@@ -57,22 +58,22 @@ print_r(isset($_SESSION['message']) ? $_SESSION['message'] : '');
 							<tr>
 								<th><?php echo $i++; ?></th>
 								<td <?php if ($key['p1ot'] == 0 && $key['p1ot'] != null) {
-													echo "class='bg-danger'";
+									echo "class='bg-danger'";
 									} ?>>
 									<?php echo $key['player1']; ?>.<?php echo $key['p1ot']; ?>
 								</td>
 								<td <?php if ($key['p2ot'] == 0 && $key['p2ot'] != null) {
-													echo "class='bg-danger'";
+									echo "class='bg-danger'";
 									} ?>>
 									<?php echo $key['player2']; ?>.<?php echo $key['p2ot']; ?>
 								</td>
 								<td <?php if ($key['p3ot'] == 0 && $key['p3ot'] != null) {
-													echo "class='bg-danger'";
+									echo "class='bg-danger'";
 									} ?>>
 									<?php echo $key['player3']; ?>.<?php echo $key['p3ot']; ?>
 								</td>
 								<td <?php if ($key['p4ot'] == 0 && $key['p4ot'] != null) {
-													echo "class='bg-danger'";
+									echo "class='bg-danger'";
 									} ?>>
 									<?php echo $key['player4']; ?>.<?php echo $key['p4ot']; ?>
 								</td>
@@ -81,13 +82,13 @@ print_r(isset($_SESSION['message']) ? $_SESSION['message'] : '');
 							}
 							}
 							if ($getCount['count'] >= 9) {
-								?>
+							?>
 							<tr class='bg-success'>
 								<th>Tot</th>
 								<th>
 									<?php print_r(array_sum(array_column($data, 'player1'))); ?>.<?php print_r(array_sum(array_column($data, 'p1ot'))); ?>
-										
-									</th>
+									
+								</th>
 								<th>
 									<?php print_r(array_sum(array_column($data, 'player2'))); ?>.<?php print_r(array_sum(array_column($data, 'p2ot'))); ?>
 								</th>
@@ -112,7 +113,7 @@ print_r(isset($_SESSION['message']) ? $_SESSION['message'] : '');
 											<select class="form-control" name="player<?php echo($i)?>">
 												
 												<?php
-													if ($getCount['count'] % 2 == 0	) {
+												if ($getCount['count'] % 2 == 0	) {
 													echo '<option selected value="null">OK</option>';
 													echo '<option value="0">NO POINT</option>';
 												}
@@ -135,7 +136,7 @@ print_r(isset($_SESSION['message']) ? $_SESSION['message'] : '');
 											<input type="hidden" name="count" value="<?php echo $getCount['count']; ?>">
 											<?php if ($getCount['count'] != 11) {
 												echo '<button name="submit" class="btn btn-primary btn-lg btn-block">Submit</button>';
-										} ?>
+											} ?>
 											<a href="controller/truncate.php" class="btn btn-info">Reset</a>
 										</div>
 									</th>
@@ -150,6 +151,11 @@ print_r(isset($_SESSION['message']) ? $_SESSION['message'] : '');
 	</body>
 </html>
 <?php
+$end_time = microtime(TRUE);
+$time_taken =($end_time - $start_time)*1000;
+$time_taken = round($time_taken,5);
+	
+echo '<small class="text-white float-right">'.$time_taken.' seconds.</small>';
 // remove all session variables
 session_unset();
 // destroy the session
